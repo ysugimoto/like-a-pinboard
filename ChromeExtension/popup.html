@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>pinboard_action</title>
+        <link rel="stylesheet" href="popup.css">
+    </head>
+    <body>
+        <form action="" method="post">
+            <table class="pb-table">
+                <tbody>
+                    <tr>
+                        <th>URL:</th>
+                        <td><input type="text" class="pb-input" name="url" id="js-url"></td>
+                    </tr>
+                    <tr>
+                        <th>title:</th>
+                        <td><input type="text" class="pb-input" name="title" id="js-title"></td>
+                    </tr>
+                    <tr>
+                        <th>tags:</th>
+                        <td><input type="text" class="pb-input" name="tags" id="js-tags"></td>
+                    </tr>
+                    <tr>
+                        <th>description:</th>
+                        <td><textarea name="description" class="pb-description" id="js-description"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="pb-submit" id="js-submit">Regist</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="overlay hidden">
+            <div class="pb-tokenform">
+                <p class="pb-tokencaption">Input token:</p>
+                <input type="text" name="token" class="pb-tokeninput">
+                <button class="pb-tokensave">save</button>
+                <p class="pb-tokeninfo"><a href="#">You don't have a token, or did you forget?</a></p>
+            </div>
+        </div>
+        <script src="popup.js"></script>
+    </body>
+</html>
+

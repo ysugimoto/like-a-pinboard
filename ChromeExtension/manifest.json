@@ -1,0 +1,21 @@
+{
+	"manifest_version": 2,
+	"version": "0.1",
+	"name": "pinboard_extension",
+	"description": "Add site API call interface extension",
+	"icons": {
+		"48": "icon48.png",
+		"128": "icon128.png"
+	},
+	"permissions": [
+		"tabs"
+	],
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"page_action": {
+		"default_icon": "icon_default.png",
+		"default_title": "pinboard_extension",
+		"default_popup": "popup.html"
+	}
+}

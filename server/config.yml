@@ -1,0 +1,9 @@
+# listen address
+host: 127.0.0.1
+
+# listen port
+port: 8888
+
+# listen path
+path: /
+
