@@ -39,11 +39,13 @@
         </form>
         <div class="overlay hidden"></div>
         <a href="javascript:void" class="pb-configuration"></a>
-        <div class="pb-tokenform hidden">
-            <p class="pb-tokencaption">Input token:<span class="pb-tokenerror hidden"></span></p>
-            <input type="text" name="token" class="pb-tokeninput">
-            <button class="pb-tokensave">save</button>
+        <div class="pb-settingform hidden">
+            <h4 class="pb-hostcaption">Input your server host:<span class="pb-hosterror hidden"></span></h4>
+            <p><input type="text" name="host" class="pb-hostinput"></p>
+            <h4 class="pb-tokencaption">Input token:<span class="pb-tokenerror hidden"></span></h4>
+            <p><input type="text" name="token" class="pb-tokeninput"></p>
             <p class="pb-tokeninfo"><a href="#">You don't have a token, or did you forget?</a></p>
+            <p class="pb-tokensavebtn"><button class="pb-tokensave">save</button></p>
         </div>
         <div class="pb-message hidden"><p class="loading"></p></div>
         <script src="popup.js"></script>
