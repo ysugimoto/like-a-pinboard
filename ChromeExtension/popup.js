@@ -21,8 +21,15 @@ function main() {
     });
 }
 
-function captureOpeningTabInfo(/*pi*/) {
-
+function captureOpeningTabInfo(pi) {
+    chrome.tabs.getSelected(null, function(tab) {
+        pi.setUrl(tab.url);
+        pi.setTitle(tab.title);
+        // A few minute delay
+        setTimeout(function() {
+            pi.focus("tags");
+        }, 50);
+    });
 }
 
 function PinboardInput() {
@@ -64,6 +71,15 @@ PinboardInput.prototype.handleEvent = function(evt) {
 };
 PinboardInput.prototype.toggleConfig = function() {
     ( TokenForm.isHidden() ) ? this.showConfiguration() : this.hideConfiguration();
+};
+PinboardInput.prototype.setUrl = function(url) {
+    this.form.querySelector("[name=url]").value = url;
+};
+PinboardInput.prototype.setTitle = function(title) {
+    this.form.querySelector("[name=title]").value = title;
+};
+PinboardInput.prototype.focus = function(name) {
+    this.form.querySelector("[name=" + name + "]").focus();
 };
 PinboardInput.prototype.showConfiguration = function(lock) {
     var tf = TokenForm.getInstance(),
@@ -187,8 +203,8 @@ TokenForm.prototype.initialize = function() {
     });
 };
 TokenForm.prototype.setToken = function(setting) {
-    this.host.value  = ( ! ("host" in setting)  || setting.host  === null ) ? "" : setting.host;
-    this.token.value = ( ! ("token" in setting) || setting.token === null ) ? "" : setting.token;
+    this.host.value  = ( ! ("requestHost" in setting) || setting.requestHost === null ) ? "" : setting.requestHost;
+    this.token.value = ( ! ("token"       in setting) || setting.token       === null ) ? "" : setting.token;
 };
 TokenForm.prototype.show = function(lock) {
     this.showOverlay();
@@ -238,15 +254,18 @@ TokenForm.prototype.handleEvent = function(evt) {
 
     // Check accept request ( async )
     promise = new Promise(this.acceptRequest(host, token));
-    promise.then(function(name) {
-        this.error.classList.add("hidden");
+    promise.then(function(json) {
+        var message;
+
+        this.tokenError.classList.add("hidden");
+        this.hostError.classList.add("hidden");
         localStorage.setItem("pinboard-token", JSON.stringify({
             requestHost: host,
             token: token
         }));
 
         this.hide();
-        message = new Message("Welcome, " + name + "!");
+        message = new Message("Welcome, " + json.message + "!");
         message.show(2000);
     }.bind(this), function(reason) {
         this.hostError.textContent = reason.host;
@@ -262,12 +281,12 @@ TokenForm.prototype.acceptRequest = function(host, token) {
         xhr.onload = function() {
             switch ( xhr.status ) {
                 case 200:
-                    resolve(xhr.responseText);
+                    resolve(JSON.parse(xhr.responseText));
                     break;
                 default:
                     reject({
-                        host: "Unknown Error",
-                        token: ""
+                        host: "",
+                        token: "Token not authorized"
                     });
                     break;
             }
@@ -290,7 +309,7 @@ TokenForm.prototype.acceptRequest = function(host, token) {
         };
 
         xhr.open("GET", host + "/accept?token=" + enc(token), true);
-        xhr.setRequestHeader("X-RequestedWith", "XMLHttpRequest");
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(null);
     };
 };

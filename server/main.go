@@ -8,7 +8,8 @@ import (
 	"github.com/ysugimoto/husky"
 )
 
-const DSN = "username:password@tcp(localhost:3306)/pinboard"
+//const DSN = "username:password@tcp(localhost:3306)/pinboard"
+const DSN = "root:root@tcp(localhost:3306)/pinboard"
 
 var db *sql.DB
 var dbError error
@@ -39,10 +40,13 @@ func handleAccept(d *husky.Dispatcher) {
 		return
 	}
 
+	fmt.Println(token[0])
+
 	// match token
 	var userName string
 	query := "SELECT name FROM pb_users WHERE token = ? LIMIT 1"
-	if err := db.QueryRow(query, token).Scan(&userName); err != nil || err == sql.ErrNoRows {
+	if err := db.QueryRow(query, token[0]).Scan(&userName); err != nil || err == sql.ErrNoRows {
+		fmt.Printf("%v\n", err)
 		message := "Token not matched"
 		sendError(d, message)
 		return
