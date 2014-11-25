@@ -167,7 +167,7 @@ PinboardInput.prototype.hideConfiguration = function() {
 PinboardInput.prototype.sendPinData = function() {
     var nodes    = this.form.querySelectorAll("input[type=text], textarea"),
         postData = [],
-        config   = JSON.parse(localStorage.getItem("pinboard-token")
+        config   = JSON.parse(localStorage.getItem("pinboard-token")),
         xhr      = new XMLHttpRequest();
 
     [].forEach.call(nodes, function(node) {

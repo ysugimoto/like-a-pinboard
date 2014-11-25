@@ -6,6 +6,8 @@
  * @copyright Yoshiaki Sugimoto all rights reserved.
  */
 
+(function() {
+
 // Request path constants
 var API_SERVER_PATH    = "/add";
 var GETTING_TOKEN_PATH = "/generate";
@@ -35,3 +37,5 @@ window.addEventListener("load", function() {
         }, 50);
     });
 });
+
+})();
