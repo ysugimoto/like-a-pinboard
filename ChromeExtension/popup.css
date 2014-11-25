@@ -49,33 +49,42 @@ body {
     100% { -webkit-transform: rotate(360deg); opacity: 0.2; }
 }
 
-.pb-tokenform {
+.pb-settingform {
     position: absolute;
     top: 50%;
     left: 50%;
     width: 400px;
-    height: 100px;
-    margin: -50px 0 0 -200px;
+    height: 300px;
+    margin: -120px 0 0 -200px;
     color: #fff;
 }
 
-.pb-tokencaption {
+.pb-tokencaption,
+.pb-hostcaption {
     font-size: 18px;
+    font-weight: normal;
     margin: 0;
     padding-bottom: 5px;
+    border-bottom: solid 1px #fff;
 }
 
+.pb-hostinput,
 .pb-tokeninput {
     border: solid 1px #ccc;
-    width: 320px;
+    width: 392px;
     height: 30px;
     font-size: 20px;
     padding: 3px;
 }
 
-.pb-tokenerror {
+.pb-tokenerror,
+.pb-hosterror {
     color: #ff0;
     margin-left: 6px;
+}
+
+.pb-tokensavebtn {
+    text-align: right;
 }
 
 .pb-tokensave {
