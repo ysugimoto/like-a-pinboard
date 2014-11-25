@@ -25,8 +25,30 @@ func main() {
 	app := husky.NewApp()
 	app.AcceptCORS()
 	app.Post("/add", handleAdd)
+	app.Get("/accept", handleAccept)
 
 	app.Serve()
+}
+
+func handleAccept(d *husky.Dispatcher) {
+	req := d.Input.GetRequest()
+	q := req.URL.Query()
+	token, ok := q["token"]
+	if !ok {
+		sendError(d, "Accept Error")
+		return
+	}
+
+	// match token
+	var userName string
+	query := "SELECT name FROM pb_users WHERE token = ? LIMIT 1"
+	if err := db.QueryRow(query, token).Scan(&userName); err != nil || err == sql.ErrNoRows {
+		message := "Token not matched"
+		sendError(d, message)
+		return
+	}
+
+	sendOK(d, userName)
 }
 
 func handleAdd(d *husky.Dispatcher) {
