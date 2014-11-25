@@ -26,21 +26,26 @@
                         <td><textarea name="description" class="pb-description" id="js-description"></textarea></td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <button class="pb-submit" id="js-submit">Regist</button>
+                        <th></th>
+                        <td>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <p class="pb-submit">
+                <button class="pb-submitbtn" id="js-submit">Regist</button>
+            </p>
+
         </form>
-        <div class="overlay hidden">
-            <div class="pb-tokenform">
-                <p class="pb-tokencaption">Input token:</p>
-                <input type="text" name="token" class="pb-tokeninput">
-                <button class="pb-tokensave">save</button>
-                <p class="pb-tokeninfo"><a href="#">You don't have a token, or did you forget?</a></p>
-            </div>
+        <div class="overlay hidden"></div>
+        <a href="javascript:void" class="pb-configuration"></a>
+        <div class="pb-tokenform hidden">
+            <p class="pb-tokencaption">Input token:<span class="pb-tokenerror hidden"></span></p>
+            <input type="text" name="token" class="pb-tokeninput">
+            <button class="pb-tokensave">save</button>
+            <p class="pb-tokeninfo"><a href="#">You don't have a token, or did you forget?</a></p>
         </div>
+        <div class="pb-message hidden"><p class="loading"></p></div>
         <script src="popup.js"></script>
     </body>
 </html>
