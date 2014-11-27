@@ -1,7 +1,7 @@
 {
   "name": "ChromeExtension",
   "version": "0.1.0",
-  "description": "like-a-pinboard Charome extension",
+  "description": "like-a-pinboard Chrome extension",
   "main": "background.js",
   "scripts": {
     "test": "npm test"

@@ -168,19 +168,24 @@ PinboardInput.prototype.sendPinData = function() {
     var nodes    = this.form.querySelectorAll("input[type=text], textarea"),
         postData = [],
         config   = JSON.parse(localStorage.getItem("pinboard-token")),
-        xhr      = new XMLHttpRequest();
+        xhr      = new XMLHttpRequest(),
+        loading  = new Message("Sending pin data...");
 
     [].forEach.call(nodes, function(node) {
         postData.push(enc(node.name) + "=" + enc(node.value));
     });
 
     xhr.onload = function() {
-        this.handleSuccessResponse(xhr.responseText);
+        this.handleResponse(xhr.responseText, loading);
     }.bind(this);
 
     xhr.onerror = function() {
-        this.handleErrorResponse(xhr.responseText);
+        this.handleResponse(xhr.responseText, loading, true);
     }.bind(this);
+
+    // loading
+    loading.setLoading(true);
+    loading.show();
 
     xhr.open("POST", config.requestHost + API_SERVER_PATH, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -226,27 +231,19 @@ PinboardInput.prototype.controlTags = function() {
 };
 
 /**
- * Handle response for success
+ * Handle response
  *
  * @method handleSuccessResponse
  * @public
- * @param String message
+ * @param String response
+ * @param Message loading
+ * @param Boolean isError
  * @return Void
  */
-PinboardInput.prototype.handleSuccessResponse = function(message) {
-    message = this.parseMessage(message);
-    // TODO: Implement
-};
+PinboardInput.prototype.handleResponse = function(response, loading, isError) {
+    var json    = this.parseMessage(response),
+        message = new Message(json.message, isError);
 
-/**
- * Handle response for error
- *
- * @method handleErrorResponse
- * @public
- * @param String message
- * @return Void
- */
-PinboardInput.prototype.handleErrorResponse = function(message) {
-    message = this.parseMessage(message);
-    // TODO: Implement
+    loading.hide();
+    message.show();
 };

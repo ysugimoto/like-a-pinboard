@@ -13,7 +13,7 @@
  * @constructor
  */
 function Overlay() {
-    this.layer = document.querySelector("overlay");
+    this.layer = document.querySelector(".overlay");
 }
 
 /**

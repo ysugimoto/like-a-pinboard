@@ -1,0 +1,54 @@
+.pb-settingform {
+    @include abscenter(400px, 300px);
+    margin-top: -120px;
+    color: #fff;
+}
+
+.pb-tokencaption,
+.pb-hostcaption {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #fff;
+}
+
+.pb-hostinput,
+.pb-tokeninput {
+    border: solid 1px #ccc;
+    width: 392px;
+    height: 30px;
+    font-size: 20px;
+    padding: 3px;
+}
+
+.pb-tokenerror,
+.pb-hosterror {
+    color: #ff0;
+    margin-left: 6px;
+}
+
+.pb-tokensavebtn {
+    text-align: right;
+}
+
+.pb-tokensave {
+    width: 60px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.pb-tokeninfo {
+    text-align: right;
+    margin-right: 10px;
+
+    > a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+    }
+}

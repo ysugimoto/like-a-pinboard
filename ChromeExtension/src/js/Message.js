@@ -14,9 +14,11 @@
  * @class Message
  * @constructor
  * @param String message
+ * @param Boolean isError
  */
-function Message(message) {
+function Message(message, isError) {
     this.message     = message;
+    this.isError     = !!isError;
     this.frame       = null;
     this.loading     = null;
     this.showLoading = false;
@@ -69,6 +71,10 @@ Message.prototype.show = function(duration) {
         this.loading.classList.add("loading");
     } else {
         this.loading.classList.remove("loading");
+    }
+
+    if ( this.isError === true ) {
+        this.loading.classList.add("errormessage");
     }
 
     this.frame.classList.remove("hidden");

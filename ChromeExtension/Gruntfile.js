@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         sass: {
             compile: {
                 files: {
-                    "<%= paths.dest %>/popup.css": "<%= paths.src %>/css/main.scss"
+                    "<%= paths.dest %>/popup.css": "<%= paths.src %>/scss/main.scss"
                 }
             }
         },

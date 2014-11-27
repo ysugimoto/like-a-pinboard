@@ -1,0 +1,32 @@
+.pb-message {
+    @extend %abszero;
+    width: 500px;
+    height: 300px;
+    color: #fff;
+    line-height: 250px;
+    font-size: 20px;
+    text-align: center;
+    opacity: 0.8;
+
+    .errormessage {
+        color: #ff0;
+    }
+
+    .loading:before {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: solid 2px #fff;
+        border-right-color: transparent;
+        border-radius: 16px;
+        margin-right: 6px;
+        -webkit-animation: spin 1s linear infinite;
+    }
+}
+
+@-webkit-keyframes spin {
+    0%   { -webkit-transform: rotate(0deg);   opacity: 0.2; }
+    50%  { -webkit-transform: rotate(180deg); opacity: 1.0; }
+    100% { -webkit-transform: rotate(360deg); opacity: 0.2; }
+}
