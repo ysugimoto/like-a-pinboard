@@ -168,6 +168,11 @@ TokenForm.prototype.handleEvent = function(evt) {
             this.hostError.textContent = "Host must not empty!";
             this.hostError.classList.remove("hidden");
         }.bind(this));
+    } else if ( ! /^https?:\/\/[\w\-\._]+(?:\:[0-9]+)$/.test(host) ) {
+        errors.push(function() {
+            this.hostError.textContent = "Host must be URL format!";
+            this.hostError.classList.remove("hidden");
+        }.bind(this));
     }
 
     if ( errors.length > 0 ) {
@@ -238,7 +243,7 @@ TokenForm.prototype.acceptRequest = function(host, token) {
             reject(reason);
         };
 
-        xhr.open("GET", host + "/accept?token=" + enc(token), true);
+        xhr.open("GET", host + "/accept?token=" + encodeURIComponent(token), true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhr.send(null);
     };
