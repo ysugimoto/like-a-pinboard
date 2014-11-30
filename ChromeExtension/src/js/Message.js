@@ -63,9 +63,12 @@ Message.prototype.setLoading = function(flag) {
  * @method show
  * @public
  * @param Number duration
+ * @param Boolean afterWindowClose
  * @return
  */
-Message.prototype.show = function(duration) {
+Message.prototype.show = function(duration, afterWindowClose) {
+    var that = this;
+
     this.showOverlay();
     if ( this.showLoading === true ) {
         this.loading.classList.add("loading");
@@ -79,7 +82,9 @@ Message.prototype.show = function(duration) {
 
     this.frame.classList.remove("hidden");
     if ( typeof duration === "number" ) {
-        this.timer = setTimeout(this.hide.bind(this), duration);
+        this.timer = setTimeout(function() {
+            that.hide(!!afterWindowClose);
+        }, duration);
     }
 };
 
@@ -88,9 +93,14 @@ Message.prototype.show = function(duration) {
  *
  * @method hide
  * @public
+ * @param Boolean closeWindow
  * @return
  */
-Message.prototype.hide = function() {
+Message.prototype.hide = function(closeWindow) {
     this.hideOverlay();
     this.frame.classList.add("hidden");
+
+    if ( closeWindow === true ) {
+        window.close();
+    }
 };

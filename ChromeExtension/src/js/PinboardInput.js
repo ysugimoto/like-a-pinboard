@@ -7,6 +7,7 @@
  */
 
 //= require TokenForm.js
+//= require TagControl.js
 
 /**
  * Pin data input manager class
@@ -15,10 +16,10 @@
  * @constructor
  */
 function PinboardInput() {
-    this.tagInpuut    = null;
     this.form         = null;
     this.registBtn    = null;
     this.config       = null;
+    this.tagControl   = null;
 
     this.initialize();
 }
@@ -31,14 +32,13 @@ function PinboardInput() {
  * @return Void
  */
 PinboardInput.prototype.initialize = function() {
-    this.form      = document.querySelector(".pb-table");
-    this.registBtn = document.querySelector(".pb-submit");
-    this.tagInput  = this.form.querySelector("[name=tags]");
-    this.config    = document.querySelector(".pb-configuration");
+    this.form       = document.querySelector(".pb-table");
+    this.registBtn  = document.querySelector(".pb-submit");
+    this.config     = document.querySelector(".pb-configuration");
+    this.tagControl = new TagControl(this.form.querySelector("[name=tags]"));
 
     this.registBtn.addEventListener("click", this);
     this.config.addEventListener("click", this);
-    this.tagInput.addEventListener("keyup", this);
 };
 
 /**
@@ -50,21 +50,16 @@ PinboardInput.prototype.initialize = function() {
  * @return Void
  */
 PinboardInput.prototype.handleEvent = function(evt) {
-    switch ( evt.type ) {
-        case "click":
-            if ( evt.target === this.registBtn ) {
-                // pushed regist button
-                evt.preventDefault();
-                this.sendPinData();
-            } else if ( evt.target === this.config ) {
-                // toggle show config
-                evt.preventDefault();
-                this.toggleConfig();
-            }
-            break;
+    evt.preventDefault();
 
-        case "keyup": // tag input observer
-            this.controlTags();
+    switch ( evt.currentTarget ) {
+        case this.registBtn:
+            // pushed regist button
+            this.sendPinData();
+            break;
+        case this.config:
+            evt.preventDefault();
+            this.toggleConfig();
             break;
     }
 };
@@ -172,11 +167,20 @@ PinboardInput.prototype.sendPinData = function() {
         loading  = new Message("Sending pin data...");
 
     [].forEach.call(nodes, function(node) {
-        postData.push(enc(node.name) + "=" + enc(node.value));
+        if ( node.name === "tags" ) {
+            return;
+        }
+        postData.push(encodeURIComponent(node.name) + "=" + encodeURIComponent(node.value));
+    });
+
+    this.tagControl.getTagList().forEach(function(tag) {
+        postData.push("tag=" + encodeURIComponent(tag));
     });
 
     xhr.onload = function() {
-        this.handleResponse(xhr.responseText, loading);
+        var isError = ( xhr.status !== 200 ) ? true : false;
+
+        this.handleResponse(xhr.responseText, loading, isError);
     }.bind(this);
 
     xhr.onerror = function() {
@@ -187,10 +191,10 @@ PinboardInput.prototype.sendPinData = function() {
     loading.setLoading(true);
     loading.show();
 
-    xhr.open("POST", config.requestHost + API_SERVER_PATH, true);
+    xhr.open("POST", config.requestHost + API_SERVER_PATH + "?token=" + config.token, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    xhr.send(postData);
+    xhr.send(postData.join("&"));
 };
 
 /**
@@ -220,17 +224,6 @@ PinboardInput.prototype.parseMessage = function(message) {
 };
 
 /**
- * Cotrol tags input
- *
- * @method controlTags
- * @private
- * @return Void
- */
-PinboardInput.prototype.controlTags = function() {
-    // TODO: implement
-};
-
-/**
  * Handle response
  *
  * @method handleSuccessResponse
@@ -241,9 +234,8 @@ PinboardInput.prototype.controlTags = function() {
  * @return Void
  */
 PinboardInput.prototype.handleResponse = function(response, loading, isError) {
-    var json    = this.parseMessage(response),
-        message = new Message(json.message, isError);
+    var message = new Message(this.parseMessage(response), isError);
 
     loading.hide();
-    message.show();
+    message.show(1600, !isError);
 };

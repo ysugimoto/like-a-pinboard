@@ -62,32 +62,53 @@ func handleAdd(d *husky.Dispatcher) {
 
 	url := req.FormValue("url")
 	title := req.FormValue("title")
-
-	fmt.Println(req.Form)
+	// "tag" field should treat as array
+	tag := req.Form["tag"]
 
 	// check token
-	//token := req.URL.Query()["token"][0]
-	token := "foobar"
-
-	var userId int
-	query := "SELECT id FROM pb_users WHERE token = ? LIMIT 1"
-	if err := trans.QueryRow(query, token).Scan(&userId); err != nil || err == sql.ErrNoRows {
+	getParam := req.URL.Query()
+	token, ok := getParam["token"]
+	if !ok {
 		trans.Rollback()
 		message := "Token not matched"
 		sendError(d, message)
 		return
 	}
 
-	query = "INSERT INTO pb_urls (url, title, user_id) VALUES (?, ?, ?);"
-	if _, err := trans.Exec(query, url, title, userId); err != nil {
+	// Check token and get userId
+	var userId int
+	query := "SELECT id FROM pb_users WHERE token = ? LIMIT 1"
+	if err := trans.QueryRow(query, token[0]).Scan(&userId); err != nil || err == sql.ErrNoRows {
 		trans.Rollback()
-		message := fmt.Sprintf("Query Error: %v\n", err)
+		message := "Token not matched!"
 		sendError(d, message)
 		return
 	}
 
+	// Insert URL
+	query = "INSERT IGNORE INTO pb_urls (url, title, user_id) VALUES (?, ?, ?);"
+	result, insertErr := trans.Exec(query, url, title, userId)
+	if insertErr != nil {
+		trans.Rollback()
+		message := fmt.Sprintf("Query Error: %v\n", insertErr)
+		sendError(d, message)
+		return
+	}
+
+	urlId, _ := result.LastInsertId()
+	// Insert tags
+	query = "INSERT IGNORE INTO pb_tags (url_id, name, user_id) VALUES (?, ?, ?);"
+	for _, t := range tag {
+		if _, err := trans.Exec(query, urlId, t, userId); err != nil {
+			trans.Rollback()
+			message := fmt.Sprintf("Query Error: %v\n", err)
+			sendError(d, message)
+			return
+		}
+	}
+
 	trans.Commit()
-	sendOK(d, "Saved")
+	sendOK(d, "URL pin have saved!")
 }
 
 func sendError(d *husky.Dispatcher, message string) {
