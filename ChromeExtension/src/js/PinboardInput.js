@@ -184,7 +184,12 @@ PinboardInput.prototype.sendPinData = function() {
     }.bind(this);
 
     xhr.onerror = function() {
-        this.handleResponse(xhr.responseText, loading, true);
+        if ( xhr.status === 0 ) {
+            // Server inactive
+            this.handleResponse("Server undefined. Does server start?", loading, true);
+        } else {
+            this.handleResponse(xhr.responseText, loading, true);
+        }
     }.bind(this);
 
     // loading
@@ -234,8 +239,9 @@ PinboardInput.prototype.parseMessage = function(message) {
  * @return Void
  */
 PinboardInput.prototype.handleResponse = function(response, loading, isError) {
-    var message = new Message(this.parseMessage(response), isError);
+    var message  = new Message(this.parseMessage(response), isError),
+        duration = ( isError ) ? 2000 : 1600;
 
     loading.hide();
-    message.show(1600, !isError);
+    message.show(duration, !isError);
 };

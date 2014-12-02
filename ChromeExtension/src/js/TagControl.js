@@ -11,6 +11,7 @@ function TagControl(input) {
     this.tagInput      = input;
     this.tagElement    = document.createElement("span");
     this.tagList       = {};
+    this.isComposition = false;
 
     this.initialize();
 }
@@ -18,7 +19,10 @@ function TagControl(input) {
 TagControl.prototype.initialize = function() {
     var removeElement = document.createElement("a");
 
-    this.tagInput.addEventListener("keyup", this);
+    this.tagInput.addEventListener("compositionstart", this);
+    this.tagInput.addEventListener("compositionend",   this);
+    this.tagInput.addEventListener("keyup",            this);
+
     this.tagWrapper.addEventListener("click", this);
 
     this.tagElement.className = "tag";
@@ -35,17 +39,23 @@ TagControl.prototype.handleEvent = function(evt) {
         case "click":
             this.handleTagClick(evt);
             break;
+        case "compositionstart":
+            this.isComposition = true;
+            break;
+        case "compositionend":
+            this.isComposition = false;
+            break;
     }
 };
 
 TagControl.prototype.handleKeyUp = function(evt) {
-    if ( evt.keyCode !== 32 ) { // space key
+    if ( evt.keyCode !== 32 || this.isComposition === true ) { // space key
         return;
     }
     var value = this.tagInput.value;
 
     // skip if empty input
-    if ( (value !== "" && value !== " ") || ! this.checkExists(value) ) {
+    if ( value !== "" && value !== " " && ! this.checkExists(value) ) {
         this.createTag(value.trim());
     }
 
