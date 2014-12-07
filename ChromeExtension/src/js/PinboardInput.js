@@ -196,9 +196,10 @@ PinboardInput.prototype.sendPinData = function() {
     loading.setLoading(true);
     loading.show();
 
-    xhr.open("POST", config.requestHost + API_SERVER_PATH + "?token=" + config.token, true);
+    xhr.open("POST", config.requestHost + API_SERVER_PATH, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("X-LAP-Token", config.token);
     xhr.send(postData.join("&"));
 };
 
