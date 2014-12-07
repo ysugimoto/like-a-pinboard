@@ -1,0 +1,23 @@
+{
+  "name": "nw-launcher",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "window": {
+    "show": false,
+    "frame": true,
+    "toolbar": true,
+    "position": "center",
+    "width": 743,
+    "height": 114,
+    "resizable": true,
+    "scrollable": false,
+    "always-on-top": true,
+    "show_in_taskbar": true
+  }
+}
