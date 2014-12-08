@@ -1,13 +1,13 @@
 {
-  "name": "nw-launcher",
-  "version": "0.0.0",
-  "description": "",
+  "name": "like-a-pinboard",
+  "version": "0.1.0",
+  "description": "Like a pinboard desktop application",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "window": {
     "show": false,
     "frame": true,
@@ -19,5 +19,12 @@
     "scrollable": false,
     "always-on-top": true,
     "show_in_taskbar": true
+  },
+  "devDependencies": {
+    "grunt-sprockets": "~0.7.0",
+    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-contrib-uglify": "~0.6.0",
+    "grunt": "~0.4.5",
+    "grunt-sass": "~0.17.0"
   }
 }

@@ -24,4 +24,6 @@ cp -f index.html $BUILD_DIR/node-webkit.app/Contents/Resources/app.nw/
 cp -f package.json $BUILD_DIR/node-webkit.app/Contents/Resources/app.nw/
 cp -Rf images $BUILD_DIR/node-webkit.app/Contents/Resources/app.nw/
 
+grunt --target=${BUILD_DIR}/node-webkit.app/Contents/Resources/app.nw
+
 echo "Build success! Open $BUILD_DIR on your finder"

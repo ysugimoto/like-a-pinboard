@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica;
+}
+
+body, html {
+    background: transparent;
+}
+
+#launcher {
+    width: 722px;
+    min-height: 78px;
+    border: solid 10px #ddd;
+    border-color: rgba(128, 128, 128, 0.6);
+}
+
+.launcher-inner {
+    background: #666;
+    padding: 10px;
+    border-radius: 5px;
+    width: 706px;
+    margin: -2px 0 0 -2px;
+}
+
+.caption {
+    color: #fff;
+    position: relative;
+    margin: 0 3px 3px 3px;
+}
+
+#config {
+    position: absolute;
+    top: 26px;
+    right: 24px;
+    background: url("images/config.white.png") center center no-repeat;
+    display: block;
+    width: 60px;
+    height: 60px;
+}
+
+.command {
+    display: block;
+    padding: 8px 0  8px 10px;
+    width: 696px;
+    height: 60px;
+    background: #333;
+    border-radius: 10px;
+}
+
+.command input[type="text"] {
+    width: 626px;
+    height: 60px;
+    background: none;
+    display: block;
+    font-size: 40px;
+    border: none;
+    outline: none;
+    color: #fff;
+    text-indent: 4px;
+}
+
+.launcher-list {
+    background: #eee;
+    max-height: 354px;
+    overflow-y: auto;
+    display: none;
+}
+
+.launcher-list.show {
+    display: block;
+}
+
+.launcher-list.terminal {
+    background-color: #333;
+    color: #fff;
+}
+
+.terminal > pre {
+    height: 334px;
+    padding: 10px;
+}
+
+
+.list-item {
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #aaa;
+    border-top: solid 1px #ccc;
+    position: relative;
+}
+
+[data-index]:after {
+    position: absolute;
+    content: "⌘";
+    display: block;
+    top: 50%;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    color: #333;
+    font-size: 20px;
+    line-height: 40px;
+    margin-top: -20px;
+}
+[data-index="1"]:after {
+    content: "⌘1";
+}
+[data-index="2"]:after {
+    content: "⌘2";
+}
+[data-index="3"]:after {
+    content: "⌘3";
+}
+[data-index="4"]:after {
+    content: "⌘4";
+}
+[data-index="5"]:after {
+    content: "⌘5";
+}
+[data-index="6"]:after {
+    content: "⌘6";
+}
+
+.list-teim:last-child {
+    border-bottom: solid 1px #ccc;
+}
+.list-item strong {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 4px;
+}
+.list-item.notfound {
+    display: none;
+}
+.list-item:hover,
+.list-item[data-selected] {
+    background: #ccb;
+}
