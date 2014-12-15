@@ -1,4 +1,4 @@
-server/pkg/
-server/src/git*
-server/src/go*
-server/build/
+api/pkg/
+api/src/git*
+api/src/go*
+api/build/
