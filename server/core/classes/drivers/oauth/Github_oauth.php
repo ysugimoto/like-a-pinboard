@@ -70,16 +70,22 @@ class SZ_Github_oauth extends SZ_Oauth_driver
 		}
 		else 
 		{
-			$uri = $this->access_token_uri
-			        . '?client_id='     . $this->client_id
-			        . '&redirect_uri='  . rawurlencode($this->callback_url)
-			        . '&client_secret=' . $this->application_secret
-			        . '&code='          . $request->get('code') ;
-			
-			$resp = $this->http->request('POST', $uri);
+			$params = array(
+				'client_id'     => $this->client_id,
+				'client_secret' => $this->application_secret,
+				'code'          => $request->get('code')
+			);
+
+			$resp = $this->http->request(
+				'POST',
+				$this->access_token_uri,
+				array(),
+				http_build_query($params)
+			);
+
 			if ( $resp->status !== 200 )
 			{
-				$this->_setError('OAuth Request Faild.');
+				$this->_setError('OAuth Request Failed.');
 				return FALSE;
 			}
 			

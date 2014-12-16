@@ -18,7 +18,7 @@
  * ====================================================================
  */
 
-class SZ_Socket_http
+class SZ_Socket_http extends SZ_Http_driver
 {
 	/**
 	 * Request data
@@ -30,12 +30,12 @@ class SZ_Socket_http
 	 * Carrige return
 	 * @var string
 	 */
-	protected $CRLF    = "\r\n";
+	protected $CRLF = "\r\n";
 	
 	/**
 	 * Send cURL request
 	 * 
-	 * @access protected
+	 * @access public
 	 * @param  string $method
 	 * @param  string $uri
 	 * @param  array $header

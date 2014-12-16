@@ -198,6 +198,12 @@ class SZ_Http extends SZ_Driver implements Growable
 		                  ? $this->loadDriver('Curl_http')
 		                  : $this->loadDriver('Socket_http');
 		
+		$this->driver->configure(array(
+			'req'            => $this->req,
+			'connectTimeout' => $this->connectTimeout,
+			'timeout'        => $this->timeout
+		));
+		
 		// Send request
 		return $this->driver->sendRequest($method, $uri, $header, $postBody);
 	}

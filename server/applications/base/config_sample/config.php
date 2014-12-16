@@ -18,6 +18,25 @@
  * ====================================================================
  */
 
+// =========  Application domain settings =================
+
+/*
+ * --------------------------------------------------
+ * OAuth settings
+ *
+ * Twitter/Github OAuth settings
+ * --------------------------------------------------
+ */
+
+$config['twitter_consumer_key']    = '';
+$config['twitter_consumer_secret'] = '';
+
+$config['github_client_id']          = '';
+$config['github_application_secret'] = '';
+
+
+// ========= /Application domain settings =================
+
 /*
  * --------------------------------------------------
  * base_url
@@ -51,7 +70,7 @@ $config['deploy_status'] = 'development';
  * --------------------------------------------------
  */
 
-$config['enable_mod_rewirte'] = FALSE;
+$config['enable_mod_rewrite'] = FALSE;
 
 
 /*

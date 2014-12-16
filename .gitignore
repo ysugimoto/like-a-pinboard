@@ -4,4 +4,4 @@ api/src/go*
 api/build/
 
 server/applications/base/config/
-server/etc/session/sess_*
+server/etc/caches/session/sess_*
