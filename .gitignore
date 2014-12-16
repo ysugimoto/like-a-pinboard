@@ -2,3 +2,5 @@ api/pkg/
 api/src/git*
 api/src/go*
 api/build/
+
+server/applications/base/config/

@@ -1,0 +1,114 @@
+.lap-header, .lap-header > h1, .lap-menu, .lap-footer, .lap-footer > p {
+  margin: 0;
+  padding: 0; }
+
+.lap-header > h1, .lap-token > h3, .lap-token .lap-info-value, .lap-account-button, .lap-account-authorize > span, .lap-footer > p {
+  font-family: 'Lato', sans-serif; }
+
+.lap-link {
+  color: #fff;
+  text-decoration: none; }
+  .lap-link:hover {
+    text-decoration: underline; }
+
+.lap-header {
+  width: 100%;
+  height: 60px;
+  background-color: #111;
+  box-shadow: 3px 3px 2px #000; }
+  .lap-header > h1 {
+    color: #fff;
+    height: 60px;
+    line-height: 60px;
+    width: 300px;
+    padding-left: 30px;
+    letter-spacing: 1px;
+    display: inline-block;
+    float: left; }
+
+.lap-menu {
+  list-style: none outside;
+  margin-left: 350px;
+  text-align: left;
+  margin-right: 30px; }
+  .lap-menu > li {
+    display: inline-block;
+    height: 60px;
+    line-height: 66px;
+    margin-left: 60px; }
+    .lap-menu > li:last-child {
+      float: right; }
+
+.lap-content {
+  width: 80%;
+  margin: 0 auto; }
+
+.lap-title {
+  width: 80%;
+  margin: 30px auto;
+  border-bottom: solid 2px #999;
+  padding-bottom: 5px; }
+
+.lap-token {
+  width: 80%;
+  border: solid 2px #ddd;
+  border-radius: 8px;
+  margin: 30px auto;
+  background: #fff; }
+  .lap-token > h3 {
+    margin: 30px;
+    color: #2875cc;
+    border-bottom: dotted 1px #2875cc;
+    padding-bottom: 6px; }
+  .lap-token .lap-info-value {
+    margin: 30px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-style: italic;
+    border: solid 1px #cabbbb;
+    border-radius: 8px;
+    padding: 16px 20px;
+    background-color: #f1eaea; }
+    .lap-token .lap-info-value.blank > input {
+      color: red; }
+    .lap-token .lap-info-value > input {
+      width: 100%;
+      background: none;
+      border: none; }
+
+.lap-account {
+  text-align: center;
+  margin: 40px; }
+
+.lap-account-button {
+  width: 400px;
+  padding: 20px 0;
+  border-radius: 36px;
+  background: #42b8dd;
+  color: #fff;
+  font-size: 20px; }
+  .lap-account-button .fa {
+    margin-right: 8px;
+    font-size: 30px; }
+  .lap-account-button:hover {
+    opacity: 0.8; }
+
+.lap-account-authorize {
+  line-height: 64px;
+  height: 64px;
+  text-align: left; }
+  .lap-account-authorize > span {
+    font-size: 18px; }
+
+.lap-footer {
+  width: 100%;
+  height: 40px;
+  background-color: #111;
+  position: fixed;
+  bottom: 0; }
+  .lap-footer > p {
+    color: #fff;
+    text-align: right;
+    padding: 0 40px;
+    line-height: 40px;
+    height: 40px; }

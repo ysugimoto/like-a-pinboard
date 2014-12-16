@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteCond $1 !^(index\.php|css|js|.+\.gif$|.+\.jpe?g$|.+\.png$|.+\.js$|.+\.css$|.+\.json$|.+\.ico$|.+\.swf$|.+\.flv$|.+\.pdf$)
+RewriteRule ^(.*)$ index.php/$1 [L]
