@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0; }
 
-.lap-header > h1, .lap-token > h3, .lap-token .lap-info-value, .lap-account-button, .lap-account-authorize > span, .lap-footer > p {
+.lap-header > h1, .lap-token > h3, .lap-token .lap-info-value, .lap-token code, .lap-account-button, .lap-account-authorize > span, .lap-footer > p {
   font-family: 'Lato', sans-serif; }
 
 .lap-link {
@@ -13,13 +13,13 @@
 
 .lap-header {
   width: 100%;
-  height: 60px;
+  height: 50px;
   background-color: #111;
   box-shadow: 3px 3px 2px #000; }
   .lap-header > h1 {
     color: #fff;
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
     width: 300px;
     padding-left: 30px;
     letter-spacing: 1px;
@@ -33,9 +33,9 @@
   margin-right: 30px; }
   .lap-menu > li {
     display: inline-block;
-    height: 60px;
-    line-height: 66px;
-    margin-left: 60px; }
+    height: 50px;
+    line-height: 56px;
+    margin-left: 50px; }
     .lap-menu > li:last-child {
       float: right; }
 
@@ -45,7 +45,7 @@
 
 .lap-title {
   width: 80%;
-  margin: 30px auto;
+  margin: 20px auto;
   border-bottom: solid 2px #999;
   padding-bottom: 5px; }
 
@@ -53,15 +53,15 @@
   width: 80%;
   border: solid 2px #ddd;
   border-radius: 8px;
-  margin: 30px auto;
+  margin: 20px auto;
   background: #fff; }
   .lap-token > h3 {
-    margin: 30px;
+    margin: 20px;
     color: #2875cc;
     border-bottom: dotted 1px #2875cc;
     padding-bottom: 6px; }
-  .lap-token .lap-info-value {
-    margin: 30px;
+  .lap-token .lap-info-value, .lap-token code {
+    margin: 20px;
     font-size: 16px;
     letter-spacing: 1px;
     font-style: italic;
@@ -69,16 +69,23 @@
     border-radius: 8px;
     padding: 16px 20px;
     background-color: #f1eaea; }
-    .lap-token .lap-info-value.blank > input {
+    .lap-token .lap-info-value.blank > input, .lap-token code.blank > input {
       color: red; }
-    .lap-token .lap-info-value > input {
+    .lap-token .lap-info-value > input, .lap-token code > input {
       width: 100%;
       background: none;
       border: none; }
+  .lap-token .lap-downloadrc {
+    margin: 0 20px 20px 20px;
+    border-radius: 6px; }
+  .lap-token code {
+    padding: 4px 8px;
+    font-weight: normal;
+    margin-left: 0; }
 
 .lap-account {
   text-align: center;
-  margin: 40px; }
+  margin: 20px; }
 
 .lap-account-button {
   width: 400px;

@@ -195,10 +195,11 @@ class SZ_Oauth_driver
 		// set callback parameters
 		$verify = ( isset($gets['oauth_verifier']) ) ? $gets['oauth_verifier'] : '';
 		$token  = ( isset($gets['oauth_token']) )    ? $gets['oauth_token']    : '';
-		
+
 		// Does oauth token match?
 		if ( $token !== $this->get('oauth_token') )
 		{
+            $this->_setError('Callback: oauth_token not matched.');
 			return FALSE;
 		}
 		
@@ -317,7 +318,7 @@ class SZ_Oauth_driver
 	protected function _buildParameter($uri, $arr = array(), $callback = TRUE, $return_array = FALSE)
 	{
 		// Does consumer key exists?
-		if ( $this->_consumer_key == '' )
+		if ( $this->consumer_key == '' )
 		{
 			$this->_setError('undefined consumer key.');
 			return FALSE;

@@ -27,7 +27,7 @@ class SZ_Twitter_oauth extends SZ_Oauth_driver
 	const AUTHORIZE_PATH        = '/oauth/authorize';
 	const AUTHENTICATE_PATH     = '/oauth/authenticate';
 	const ACCESS_TOKEN_PATH     = '/oauth/access_token';
-	const ACCOUNT_VERIFY_PATH   = '/account/verify/credentials.json';
+	const ACCOUNT_VERIFY_PATH   = '/1.1/account/verify_credentials.json';
 	const UPDATE_PATH           = '/1.1/statuses/update';
 	const RETWEET_PATH          = '/1.1/statuses/retweet';
 	const HOME_TIMELINE_PATH    = '/1.1/statuses/home_timeline';
@@ -59,21 +59,18 @@ class SZ_Twitter_oauth extends SZ_Oauth_driver
 	 */
 	public function getUser($user = '')
 	{
-		if ( ! $user )
-		{
-			$this->_setError('User id or screen name is not specified.');
-			return FALSE;
-		}
-		
-		$uri    = self::TWITTER_BASE_URL . '/users/show/' . $user . '.json';
+		$uri = ( ! empty($user) )
+			     ? self::REQUEST_BASE . '/users/show/' . $user . '.json'
+			     : self::REQUEST_BASE . self::ACCOUNT_VERIFY_PATH;
+			
 		$header = array();
 		if ( $this->isAuthorized() )
 		{
 			$headers = $this->_buildParameter(
 				$uri,
 				array(
-					'oauth_token' => $this->get('oauth_token'),
-					'secret'      => $this->get('oauth_token_secret')
+					'oauth_token'        => $this->get('oauth_token'),
+					'oauth_token_secret' => $this->get('oauth_token_secret')
 				),
 				FALSE,
 				TRUE
@@ -82,7 +79,6 @@ class SZ_Twitter_oauth extends SZ_Oauth_driver
 				'Authorization: OAuth ' . implode(', ', $headers)
 			);
 		}
-		
 		$response = $this->http->request('GET', $uri, $header);
 		
 		if ( $response->status !== 200 )
@@ -123,8 +119,8 @@ class SZ_Twitter_oauth extends SZ_Oauth_driver
 		$headers = $this->_buildParameter(
 			$uri,
 			array(
-				'oauth_token' => $this->get('oauth_token'),
-				'secret'      => $this->get('oauth_token_secret')
+				'oauth_token'        => $this->get('oauth_token'),
+				'oauth_token_secret' => $this->get('oauth_token_secret')
 			),
 			FALSE,
 			TRUE

@@ -279,7 +279,7 @@ class SZ_Importer implements Growable
 			{
 				try
 				{
-					$module   = $this->loadModule($model . $suffix, 'models', TRUE, $param);
+					$module   = $this->loadModule($name . $suffix, 'models', TRUE, $param);
 					$isLoaded = TRUE;
 					break;
 				}
