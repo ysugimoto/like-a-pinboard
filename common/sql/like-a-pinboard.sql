@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: 2014 年 12 月 17 日 08:07
+-- Generation Time: 2014 年 12 月 17 日 21:18
 -- サーバのバージョン： 5.5.38
 -- PHP Version: 5.6.2
 
@@ -27,10 +27,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `pb_facebook_account` (
-`id` int(10) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
   `facebook_id` int(11) unsigned NOT NULL,
-  `facebook_name` int(64) NOT NULL,
-  `auth_token` int(255) NOT NULL
+  `facebook_name` varchar(64) NOT NULL,
+  `access_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -40,10 +40,10 @@ CREATE TABLE `pb_facebook_account` (
 --
 
 CREATE TABLE `pb_github_account` (
-`id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
   `github_id` int(11) unsigned NOT NULL,
   `github_name` varchar(64) NOT NULL,
-  `auth_token` varchar(255) NOT NULL
+  `access_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -64,10 +64,10 @@ CREATE TABLE `pb_tags` (
 --
 
 CREATE TABLE `pb_twitter_account` (
-`id` int(10) unsigned NOT NULL,
-  `twttier_id` int(10) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `twitter_id` int(10) unsigned NOT NULL,
   `twitter_name` varchar(64) NOT NULL,
-  `auth_token` varchar(255) NOT NULL
+  `access_token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -95,8 +95,11 @@ CREATE TABLE `pb_users` (
   `name` varchar(64) NOT NULL,
   `last_login` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `token` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `token` varchar(64) DEFAULT NULL,
+  `twitter_access_token` varchar(255) DEFAULT NULL,
+  `facebook_access_token` varchar(255) DEFAULT NULL,
+  `github_access_token` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -106,13 +109,13 @@ CREATE TABLE `pb_users` (
 -- Indexes for table `pb_facebook_account`
 --
 ALTER TABLE `pb_facebook_account`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `facebook_id` (`facebook_id`);
+ ADD UNIQUE KEY `facebook_id` (`facebook_id`);
 
 --
 -- Indexes for table `pb_github_account`
 --
 ALTER TABLE `pb_github_account`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `github_id` (`github_id`);
+ ADD UNIQUE KEY `github_id` (`github_id`);
 
 --
 -- Indexes for table `pb_tags`
@@ -124,7 +127,7 @@ ALTER TABLE `pb_tags`
 -- Indexes for table `pb_twitter_account`
 --
 ALTER TABLE `pb_twitter_account`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `twttier_id` (`twttier_id`);
+ ADD UNIQUE KEY `twttier_id` (`twitter_id`);
 
 --
 -- Indexes for table `pb_urls`
@@ -143,21 +146,6 @@ ALTER TABLE `pb_users`
 --
 
 --
--- AUTO_INCREMENT for table `pb_facebook_account`
---
-ALTER TABLE `pb_facebook_account`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `pb_github_account`
---
-ALTER TABLE `pb_github_account`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `pb_twitter_account`
---
-ALTER TABLE `pb_twitter_account`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `pb_urls`
 --
 ALTER TABLE `pb_urls`
@@ -166,7 +154,7 @@ MODIFY `id` int(1) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `pb_users`
 --
 ALTER TABLE `pb_users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
