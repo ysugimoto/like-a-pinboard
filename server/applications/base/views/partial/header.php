@@ -14,7 +14,6 @@
             <ul class="lap-menu">
                 <?php if ( isset($user) ):?>
                 <li><a href="<?php echo page_link("recent/pins");?>" class="lap-link">Recent pins</a></li>
-                <li><a href="<?php echo page_link("recent/tags");?>" class="lap-link">Recent tags</a></li>
                 <li><a href="<?php echo page_link("signout");?>" class="lap-link">Sign out</a></li>
                 <?php endif;?>
             </ul>

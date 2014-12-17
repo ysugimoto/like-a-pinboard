@@ -16,6 +16,18 @@ class UserModel extends SZ_Kennel
     protected $twitter  = "pb_twitter_account";
 
     /**
+     * Get user ID
+     *
+     * @public
+     * @return int
+     */
+    public function getUserID()
+    {
+        $sess = Seezoo::$Importer->library("session");
+        return (int)$sess->get("login_id");
+    }
+
+    /**
      * Check user logged in
      *
      * @public
@@ -23,8 +35,7 @@ class UserModel extends SZ_Kennel
      */
     public function isLoggedIn()
     {
-        $sess = Seezoo::$Importer->library("session");
-        return ( $sess->get("login_id") > 0 ) ? TRUE : FALSE;
+        return ( $this->getUserID() > 0 ) ? TRUE : FALSE;
     }
 
     /**
@@ -46,7 +57,7 @@ class UserModel extends SZ_Kennel
      * @param int $userID
      * @return mixed
      */
-    public function getUserByID($userID)
+    public function getUserByID($userID = 0)
     {
         $sql   = $this->_genUserFindSQL();
         $sql  .= "WHERE U.id = ? LIMIT 1 ";
