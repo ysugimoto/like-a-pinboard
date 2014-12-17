@@ -28,6 +28,18 @@ class UserModel extends SZ_Kennel
     }
 
     /**
+     * Log out
+     *
+     * @public
+     * @return void
+     */
+    public function logout()
+    {
+        $sess = Seezoo::$Importer->library("session");
+        $sess->remove("login_id");
+    }
+
+    /**
      * Get user info from ID
      *
      * @public
@@ -88,7 +100,6 @@ class UserModel extends SZ_Kennel
         return $sql;
     }
 
-
     /**
      * Create new user
      *
@@ -103,8 +114,24 @@ class UserModel extends SZ_Kennel
         // Insert main user table
         $user["created_at"] = $date->format("Y-m-d H:i:s");
         $user["token"]      = $this->_genToken();
+        $user["last_login"] = $date->format("Y-m-d H:i:s");
 
         return $this->db->insert($this->table, $user, TRUE);
+    }
+
+    /**
+     * Update last login
+     *
+     * @public
+     * @param int $userID
+     */
+    public function updateLastLogin($userID)
+    {
+        $date = new DateTime();
+
+        $user["last_login"] = $date->format("Y-m-d H:i:s");
+
+        $this->db->update($this->table, $user, array("id" => (int)$userID));
     }
 
     /**
@@ -139,7 +166,10 @@ class UserModel extends SZ_Kennel
         $query = $this->db->query($sql, array($facebookAuthToken));
         if ( $query->row() )
         {
-            return $query->row()->id;
+            $id = $query->row()->id;
+            $this->updateLastLogin($id);
+            $this->db->commit();
+            return $id;
         }
 
         $userID = $this->createUser(array(
@@ -158,7 +188,7 @@ class UserModel extends SZ_Kennel
             "user_id"       => $userID,
             "facebook_id"   => $facebookID,
             "facebook_name" => $facebookName,
-            "access_token"    => $facebookAuthToken
+            "access_token"  => $facebookAuthToken
         );
 
         if ( $this->db->insert($this->facebook, $data) )
@@ -191,7 +221,10 @@ class UserModel extends SZ_Kennel
         $query = $this->db->query($sql, array($githubAuthToken));
         if ( $query->row() )
         {
-            return $query->row()->id;
+            $id = $query->row()->id;
+            $this->updateLastLogin($id);
+            $this->db->commit();
+            return $id;
         }
 
         $userID = $this->createUser(array(
@@ -207,10 +240,10 @@ class UserModel extends SZ_Kennel
 
         // Insert relation table
         $data = array(
-            "user_id"     => $userID,
-            "github_id"   => $githubID,
-            "github_name" => $githubName,
-            "access_token"  => $githubAuthToken
+            "user_id"      => $userID,
+            "github_id"    => $githubID,
+            "github_name"  => $githubName,
+            "access_token" => $githubAuthToken
         );
 
         if ( $this->db->insert($this->github, $data) )
@@ -243,7 +276,10 @@ class UserModel extends SZ_Kennel
         $query = $this->db->query($sql, array($twitterAuthToken));
         if ( $query->row() )
         {
-            return $query->row()->id;
+            $id = $query->row()->id;
+            $this->updateLastLogin($id);
+            $this->db->commit();
+            return $id;
         }
 
         $userID = $this->createUser(array(

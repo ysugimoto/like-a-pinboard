@@ -15,6 +15,10 @@ class SigninController extends SZ_Breeder
 
     public function index()
     {
+        if ( $this->userModel->isLoggedIn() )
+        {
+            return $this->response->redirect("index");
+        }
     }
 
     public function github()
@@ -27,15 +31,10 @@ class SigninController extends SZ_Breeder
 
         if ( $this->oauth->auth2() )
         {
-            $this->_githubLogin();
             return $this->response->redirect("index");
         }
 
         return Signal::failed;
-    }
-
-    protected function _githubLogin()
-    {
     }
 
     public function github_callback()

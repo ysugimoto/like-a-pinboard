@@ -17,7 +17,10 @@ class IndexController extends SZ_Breeder
         $id   = $this->session->get("login_id");
         $user = $this->userModel->getUserByID($id);
 
+        $auth = $this->session->getFlash("oauth_error");
+
         $this->view->assign("user", $user);
+        $this->view->assign("auth_result", $auth);
     }
 }
 

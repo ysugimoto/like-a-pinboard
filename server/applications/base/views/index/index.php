@@ -1,21 +1,30 @@
 <?php echo $this->partial("partial/header");?>
+        <?php if ( $auth_result === 0 ):?>
+            <div class="lap-auth-result auth-success">
+                <p>Authenticate success.</p>
+            </div>
+        <?php elseif ( $auth_result === 1 ):?>
+            <div class="lap-auth-result auth-error">
+                <p>Authenticate error.</p>
+            </div>
+        <?php endif;?>
         <section class="lap-content">
             <h2 class="lap-title">Sign in</h2>
             <section class="lap-token">
-                <h3>This server URL:</h3>
+                <h3>This server URL ( for Chrome Extension )</h3>
                 <p class="lap-info-value">
                 <input type="text" value="<?php echo page_link();?>" readonly>
                 </p>
-                <h3>Your token:</h3>
+                <h3>Your token ( for Chrome Extension )</h3>
                 <p class="lap-info-value">
                 <input type="text" value="<?php echo prep_str($user->token);?>" readonly>
                 </p>
-                <h3>Download Alfred .rc file</h3>
-                <a href="<?php echo page_link("index/downloadrc");?>" class="pure-button button-primary lap-downloadrc">
+                <h3>Download Alfred .rc file ( for Alfred Worflow )</h3>
+                <a href="<?php echo page_link("download");?>" class="pure-button button-primary lap-downloadrc">
                     <i class="fa fa-download"></i>
                     Download
                 </a>
-                Download and move to <code>$HOME/.laprc</code>
+                Download <code>user.laprc</code> and move to <code>$HOME/.laprc</code>
             </section>
             <div class="lap-account pure-g">
                 <div class="pure-u-2-3">
@@ -28,7 +37,9 @@
                     <?php if ( ! $user->twitter_id ):?>
                     <span>Not connected</span>
                     <?php else:?>
-                    <span class="connected">Connected</span>
+                    <span class="connected">
+                        <i class="fa fa-check"></i>Connected
+                    </span>
                     <?php endif;?>
                 </div>
             </div>
@@ -43,7 +54,9 @@
                     <?php if ( ! $user->github_id ):?>
                     <span>Not connected</span>
                     <?php else:?>
-                    <span class="connected">Connected</span>
+                    <span class="connected">
+                        <i class="fa fa-check"></i>Connected
+                    </span>
                     <?php endif;?>
                 </div>
             </div>
