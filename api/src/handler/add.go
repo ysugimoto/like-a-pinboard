@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/ysugimoto/husky"
+	"time"
 )
 
 func Add(d *husky.Dispatcher) {
@@ -39,9 +40,10 @@ func Add(d *husky.Dispatcher) {
 
 	// Insert URL
 	insert := map[string]interface{}{
-		"url":     url,
-		"title":   title,
-		"user_id": userId,
+		"url":        url,
+		"title":      title,
+		"user_id":    userId,
+		"created_at": getCurrentDateTime(),
 	}
 	result, insertErr := db.Insert("pb_urls", insert)
 	if insertErr != nil {
@@ -69,4 +71,18 @@ func Add(d *husky.Dispatcher) {
 
 	db.TransCommit()
 	SendOK(d, "URL pin have saved!")
+}
+
+func getCurrentDateTime() string {
+	t := time.Now()
+
+	// FIXME: Time.Format(2006-10-10 02:02:02") returns illigal formatted string, why?
+	return fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d",
+		t.Year(),
+		t.Month(),
+		t.Day(),
+		t.Hour(),
+		t.Minute(),
+		t.Second(),
+	)
 }
