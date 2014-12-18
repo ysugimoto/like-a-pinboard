@@ -60,7 +60,7 @@ func Search(d *husky.Dispatcher) {
 	// Search Query
 	query := "SELECT U.url, U.title, T.name FROM pb_tags as T "
 	query += "JOIN pb_urls as U ON ( T.url_id = U.id ) "
-	query += "WHERE T.user_id = ? AND "
+	query += "WHERE U.user_id = ? AND "
 	bind := []interface{}{userId}
 	where := []string{}
 
@@ -80,7 +80,6 @@ func Search(d *husky.Dispatcher) {
 
 	var result []SearchResult
 	for rows.Next() {
-		fmt.Println("found")
 		r := SearchResult{}
 		rows.Scan(&r.Url, &r.Title, &r.Tag)
 		result = append(result, r)
